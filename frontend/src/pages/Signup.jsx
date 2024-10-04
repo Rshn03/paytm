@@ -5,12 +5,14 @@ import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate=useNavigate();
 
     const handleSignup = async () => {
         try {
@@ -21,7 +23,7 @@ export const Signup = () => {
                 password,
             });
             localStorage.setItem("token", response.data.token)
-            console.log(response.data);
+            navigate("/dashboard");
         } catch (error) {
             console.error(error.response.data);
         }
