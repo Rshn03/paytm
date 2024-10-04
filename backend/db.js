@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 
 mongoose.connect("mongodb+srv://rishin07:Rm%40102003@cluster0.l08hu.mongodb.net/paytm")
 
-// Create a Schema for Users
+//Schema
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -35,7 +36,7 @@ const userSchema = new mongoose.Schema({
 
 const accountSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId, // Reference to User model
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },

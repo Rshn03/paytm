@@ -21,7 +21,7 @@ router.post("/signup", async (req, res) => {
     if (!success) {
         return res.status(400).json({
             message: "Invalid input",
-            details: error.format(), // Include detailed validation errors
+            details: error.format(), 
         });
     }
 
@@ -30,7 +30,7 @@ router.post("/signup", async (req, res) => {
         return res.status(409).json({ message: "Email already taken" });
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10); // Hash the password
+    const hashedPassword = await bcrypt.hash(req.body.password, 10); // hashing
 
     const user = await User.create({
         username: req.body.username,
@@ -68,7 +68,7 @@ router.post("/signin", async (req, res) => {
     }
 
     const user = await User.findOne({ username: req.body.username });
-    if (user && await bcrypt.compare(req.body.password, user.password)) { // Compare hashed passwords
+    if (user && await bcrypt.compare(req.body.password, user.password)) { // comparing hashed passes
         const token = jwt.sign({ userId: user._id }, JWT_SECRET);
         res.json({ token });
         return;
@@ -95,7 +95,7 @@ router.put("/", authMiddleware, async (req, res) => {
     const updateData = { ...req.body };
 
     if (req.body.password) {
-        updateData.password = await bcrypt.hash(req.body.password, 10); // Hash new password if provided
+        updateData.password = await bcrypt.hash(req.body.password, 10); 
     }
 
     await User.updateOne({ _id: req.userId }, { $set: updateData });
@@ -107,7 +107,7 @@ router.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
     const users = await User.find({
         $or: [
-            { firstName: { "$regex": filter, "$options": "i" } }, // Case-insensitive search
+            { firstName: { "$regex": filter, "$options": "i" } },
             { lastName: { "$regex": filter, "$options": "i" } },
         ],
     });
